@@ -1,10 +1,9 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
 using SkbKontur.TypeScript.ContractGenerator.CodeDom;
-
 using SkbKontur.TypeScript.ContractGenerator.Extensions;
 
 namespace SkbKontur.TypeScript.ContractGenerator.TypeBuilders
@@ -16,64 +15,55 @@ namespace SkbKontur.TypeScript.ContractGenerator.TypeBuilders
         {
         }
 
-        public override bool IsDefinitionBuilded => Declaration.Definition != null;
+        public override bool IsDefinitionBuilded { get { return Declaration.Definition != null; } }
 
-        private FlowTypeTypeDeclaration CreateComplexFlowTypeDeclarationWithoutDefintion(Type type)
+        public override void Initialize(ITypeGenerator typeGenerator)
         {
+            if(Type.BaseType != typeof(object) && Type.BaseType != typeof(ValueType) && Type.BaseType != typeof(MarshalByRefObject) && Type.BaseType != null)
+            {
+                typeGenerator.ResolveType(Type.BaseType);
+            }
+            Type type = Type;
             var result = new FlowTypeTypeDeclaration
                 {
                     Name = type.IsGenericType ? new Regex("`.*$").Replace(type.GetGenericTypeDefinition().Name, "") : type.Name,
                     Definition = null,
-                    GenericTypeArguments = Type.IsGenericTypeDefinition ? Type.GetGenericArguments().Select(x => x.Name).ToArray() : null
                 };
-            return result;
-        }
-
-        public override void Initialize(ITypeGenerator typeGenerator)
-        {
-            if (Type.BaseType != typeof(object) && Type.BaseType != typeof(ValueType) && Type.BaseType != typeof(MarshalByRefObject) && Type.BaseType != null)
-            {
-                typeGenerator.ResolveType(Type.BaseType);
-            }
-            Declaration = CreateComplexFlowTypeDeclarationWithoutDefintion(Type);
+            Declaration = result;
             Unit.Body.Add(new FlowTypeExportTypeStatement {Declaration = Declaration});
         }
 
-        public override void BuildDefiniion(ITypeGenerator typeGenerator)
+        public override void BuildDefinition(ITypeGenerator typeGenerator)
         {
-            Declaration.Definition = CreateComplexFlowTypeDefintion(typeGenerator);
+            Declaration.Definition = CreateComplexFlowTypeDefinition(typeGenerator);
         }
 
-        protected virtual FlowTypeTypeDefintion CreateComplexFlowTypeDefintion(ITypeGenerator typeGenerator)
+        protected virtual FlowTypeTypeDefintion CreateComplexFlowTypeDefinition(ITypeGenerator typeGenerator)
         {
             var result = new FlowTypeTypeDefintion();
             var properties = CreateTypeProperties(Type);
-            foreach (var property in properties)
+            foreach(var property in properties)
             {
-                var (isNullable, type) = FlowTypeGeneratorHelpers.ProcessNullable(property, property.PropertyType);
-
-                var propertyType = typeGenerator.BuildAndImportType(Unit, null, type);
-                result.Members.Add(new FlowTypeTypeMemberDeclaration
-                    {
-                        Name = BuildPropertyName(property.Name),
-                        Optional = isNullable,
-                        Type = property.PropertyType.IsGenericParameter
-                                   ? new FlowTypeTypeReference(property.PropertyType.Name)
-                                   : isNullable ? OrNull(propertyType) : propertyType,
-                    });
+                var constValueByClassTypeAttribute = Attribute.GetCustomAttributes(property).Any(x => x.GetType().Name == "ConstValueByClassTypeAttribute");
+                if(constValueByClassTypeAttribute)
+                {
+                    result.Members.Add(new FlowTypeTypeMemberDeclaration
+                        {
+                            Name = BuildPropertyName(property.Name),
+                            Type = new FlowTypeStringLiteral(Type.Name)
+                        });
+                }
+                else
+                {
+                    result.Members.Add(new FlowTypeTypeMemberDeclaration
+                        {
+                            Name = BuildPropertyName(property.Name),
+                            Type = typeGenerator.BuildAndImportType(Unit, property, property.PropertyType),
+                        });
+                }
             }
-            return result;
-        }
 
-        private FlowTypeUnionType OrNull(FlowTypeType buildAndImportType)
-        {
-            return new FlowTypeUnionType(
-                new[]
-                    {
-                        new FlowTypeBuildInType("null"),
-                        buildAndImportType
-                    }
-                );
+            return result;
         }
 
         private string BuildPropertyName(string propertyName)

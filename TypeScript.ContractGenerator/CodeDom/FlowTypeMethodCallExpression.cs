@@ -1,11 +1,11 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace SkbKontur.TypeScript.ContractGenerator.CodeDom
 {
     public class FlowTypeMethodCallExpression : FlowTypeExpression
     {
-        public FlowTypeMethodCallExpression(FlowTypeExpression subject, string methodName, params FlowTypeExpression[] arguments)
+        public FlowTypeMethodCallExpression(FlowTypeExpression subject, string methodName, params FlowTypeType[] arguments)
         {
             Subject = subject;
             MethodName = methodName;
@@ -14,13 +14,11 @@ namespace SkbKontur.TypeScript.ContractGenerator.CodeDom
 
         public FlowTypeExpression Subject { get; set; }
         public string MethodName { get; set; }
-        public List<FlowTypeExpression> Arguments { get { return arguments; } }
+        public List<FlowTypeType> Arguments { get; } = new List<FlowTypeType>();
 
         public override string GenerateCode(ICodeGenerationContext context)
         {
             return string.Format("{0}.{1}({2})", Subject.GenerateCode(context), MethodName, string.Join(", ", Arguments.Select(x => x.GenerateCode(context))));
         }
-
-        private readonly List<FlowTypeExpression> arguments = new List<FlowTypeExpression>();
     }
 }

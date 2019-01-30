@@ -1,4 +1,4 @@
-namespace SkbKontur.TypeScript.ContractGenerator.Internals
+﻿namespace SkbKontur.TypeScript.ContractGenerator.Internals
 {
     internal class ImportedSymbol
     {
@@ -20,9 +20,9 @@ namespace SkbKontur.TypeScript.ContractGenerator.Internals
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if(ReferenceEquals(null, obj)) return false;
+            if(ReferenceEquals(this, obj)) return true;
+            if(obj.GetType() != this.GetType()) return false;
             return Equals((ImportedSymbol)obj);
         }
 

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -8,23 +8,21 @@ namespace SkbKontur.TypeScript.ContractGenerator.CodeDom
     {
         public FlowTypeObjectLiteral(IEnumerable<FlowTypeObjectLiteralInitializer> properties)
         {
-            this.properties = properties.ToList();
+            this.Properties = properties.ToList();
         }
 
-        public List<FlowTypeObjectLiteralInitializer> Properties { get { return properties; } }
+        public List<FlowTypeObjectLiteralInitializer> Properties { get; }
 
         public override string GenerateCode(ICodeGenerationContext context)
         {
             var result = new StringBuilder();
             result.Append("{").Append(context.NewLine);
             var propertiesString = string.Join("," + context.NewLine, Properties.Select(x => x.GenerateCode(context)));
-            if (propertiesString.Length > 0)
+            if(propertiesString.Length > 0)
                 propertiesString += ",";
             result.AppendWithTab(context.Tab, propertiesString, context.NewLine).Append(context.NewLine);
             result.Append("}");
             return result.ToString();
         }
-
-        private readonly List<FlowTypeObjectLiteralInitializer> properties;
     }
 }

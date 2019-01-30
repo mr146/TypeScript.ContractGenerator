@@ -1,7 +1,6 @@
-namespace SkbKontur.TypeScript.ContractGenerator.CodeDom
+﻿namespace SkbKontur.TypeScript.ContractGenerator.CodeDom
 {
-    public abstract class FlowTypeExpression
+    public abstract class FlowTypeExpression : FlowTypeType
     {
-        public abstract string GenerateCode(ICodeGenerationContext context);
     }
 }

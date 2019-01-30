@@ -1,4 +1,4 @@
-using SkbKontur.TypeScript.ContractGenerator.CodeDom;
+﻿using SkbKontur.TypeScript.ContractGenerator.CodeDom;
 
 namespace SkbKontur.TypeScript.ContractGenerator.TypeBuilders
 {
@@ -6,7 +6,7 @@ namespace SkbKontur.TypeScript.ContractGenerator.TypeBuilders
     {
         bool IsDefinitionBuilded { get; }
         void Initialize(ITypeGenerator typeGenerator);
-        void BuildDefiniion(ITypeGenerator typeGenerator);
+        void BuildDefinition(ITypeGenerator typeGenerator);
         FlowTypeType ReferenceFrom(FlowTypeUnit targetUnit, ITypeGenerator typeGenerator);
     }
 }

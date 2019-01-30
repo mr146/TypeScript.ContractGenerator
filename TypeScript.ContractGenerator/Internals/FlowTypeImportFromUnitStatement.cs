@@ -1,4 +1,4 @@
-using SkbKontur.TypeScript.ContractGenerator.CodeDom;
+﻿using SkbKontur.TypeScript.ContractGenerator.CodeDom;
 
 namespace SkbKontur.TypeScript.ContractGenerator.Internals
 {
@@ -6,10 +6,11 @@ namespace SkbKontur.TypeScript.ContractGenerator.Internals
     {
         public override string GenerateCode(ICodeGenerationContext context)
         {
-            if (context.TypeChecker == JavaScriptTypeChecker.TypeScript)
+            if(context.TypeChecker == JavaScriptTypeChecker.TypeScript)
             {
                 return $"import {{ {TypeName} }} from '{context.GetReferenceFromUnitToAnother(CurrentUnit.Path, TargetUnit.Path)}';";
             }
+
             return $"import type {{ {TypeName} }} from '{context.GetReferenceFromUnitToAnother(CurrentUnit.Path, TargetUnit.Path)}';";
         }
 

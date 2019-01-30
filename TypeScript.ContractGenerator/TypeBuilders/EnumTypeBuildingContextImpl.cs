@@ -1,5 +1,4 @@
-using System;
-using System.Linq;
+﻿using System;
 
 using SkbKontur.TypeScript.ContractGenerator.CodeDom;
 
@@ -15,33 +14,16 @@ namespace SkbKontur.TypeScript.ContractGenerator.TypeBuilders
         public override void Initialize(ITypeGenerator typeGenerator)
         {
             var values = Type.GetEnumNames();
-            var enumResult = new FlowTypeTypeDeclaration
+            var enumResult = new FlowTypeEnumDeclaration
                 {
                     Name = Type.Name,
-                    Definition = new FlowTypeUnionType(values.Select(x => new FlowTypeStringLiteralType(x)).Cast<FlowTypeType>().ToArray()),
+                    Definition = new FlowTypeEnumDefinition(Type),
                 };
             Unit.Body.Add(
                 new FlowTypeExportTypeStatement
                     {
                         Declaration = enumResult
                     });
-            Unit.Body.Add(
-                new FlowTypeExportStatement
-                    {
-                        Declaration = new FlowTypeConstantDefinition
-                            {
-                                Name = Type.Name + "s",
-                                Value = new FlowTypeObjectLiteral(values.Select(x => new FlowTypeObjectLiteralProperty
-                                    {
-                                        Name = new FlowTypeStringLiteral {Value = x},
-                                        Value = new FlowTypeCastExpression(new FlowTypeStringLiteral
-                                            {
-                                                Value = x,
-                                            }, new FlowTypeTypeReference(Type.Name)),
-                                    }))
-                            }
-                    }
-                );
             Declaration = enumResult;
         }
     }

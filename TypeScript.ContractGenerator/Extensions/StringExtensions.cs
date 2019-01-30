@@ -1,26 +1,31 @@
-﻿namespace SkbKontur.TypeScript.ContractGenerator.Extensions
+﻿using System.Globalization;
+using System.Text;
+
+namespace SkbKontur.TypeScript.ContractGenerator.Extensions
 {
     public static class StringExtensions
     {
         public static string ToLowerCamelCase(this string input)
         {
-            if (string.IsNullOrEmpty(input) || !char.IsUpper(input[0]))
+            if(string.IsNullOrEmpty(input) || !char.IsUpper(input[0]))
                 return input;
-
-            var chars = input.ToCharArray();
-            for (var i = 0; i < chars.Length; i++)
+            var stringBuilder = new StringBuilder();
+            for(var startIndex = 0; startIndex < input.Length; ++startIndex)
             {
-                if (i == 1 && !char.IsUpper(chars[i]))
+                var flag = startIndex + 1 < input.Length;
+                if(startIndex == 0 || !flag || char.IsUpper(input[startIndex + 1]))
+                {
+                    var lower = char.ToLower(input[startIndex], CultureInfo.InvariantCulture);
+                    stringBuilder.Append(lower);
+                }
+                else
+                {
+                    stringBuilder.Append(input.Substring(startIndex));
                     break;
-
-                var hasNext = i + 1 < chars.Length;
-                if (i > 0 && hasNext && !char.IsUpper(chars[i + 1]))
-                    break;
-
-                chars[i] = char.ToLowerInvariant(chars[i]);
+                }
             }
 
-            return new string(chars);
+            return stringBuilder.ToString();
         }
     }
 }

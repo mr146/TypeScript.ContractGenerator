@@ -1,4 +1,4 @@
-namespace SkbKontur.TypeScript.ContractGenerator.CodeDom
+﻿namespace SkbKontur.TypeScript.ContractGenerator.CodeDom
 {
     public class FlowTypeNullableType : FlowTypeType
     {
@@ -9,13 +9,22 @@ namespace SkbKontur.TypeScript.ContractGenerator.CodeDom
 
         public override string GenerateCode(ICodeGenerationContext context)
         {
-            if (context.TypeChecker == JavaScriptTypeChecker.TypeScript)
+            if(context.TypeChecker == JavaScriptTypeChecker.TypeScript)
             {
                 return $"Nullable<{innerType.GenerateCode(context)}>";
             }
+
             return "?" + innerType.GenerateCode(context);
         }
 
         private readonly FlowTypeType innerType;
+    }
+
+    public class FlowTypeVoidType : FlowTypeType
+    {
+        public override string GenerateCode(ICodeGenerationContext context)
+        {
+            return "void";
+        }
     }
 }

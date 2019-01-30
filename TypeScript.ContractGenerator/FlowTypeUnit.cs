@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,11 +11,11 @@ namespace SkbKontur.TypeScript.ContractGenerator
     {
         public string Path { get; set; }
         public IEnumerable<FlowTypeImportStatement> Imports { get { return imports.Values; } }
-        public List<FlowTypeStatement> Body { get { return body; } }
+        public List<FlowTypeStatement> Body { get; } = new List<FlowTypeStatement>();
 
         public FlowTypeTypeReference AddTypeImport(Type sourceType, FlowTypeTypeDeclaration typeDeclaration, FlowTypeUnit sourceUnit)
         {
-            if (sourceUnit != this && !imports.ContainsKey(sourceType))
+            if(sourceUnit != this && !imports.ContainsKey(sourceType))
             {
                 imports.Add(sourceType, new FlowTypeImportFromUnitStatement
                     {
@@ -24,13 +24,14 @@ namespace SkbKontur.TypeScript.ContractGenerator
                         TargetUnit = sourceUnit,
                     });
             }
+
             return new FlowTypeTypeReference(typeDeclaration.Name);
         }
 
         public FlowTypeVariableReference AddDefaultSymbolImport(string localName, string path)
         {
             var importedSymbol = new ImportedSymbol("default", localName, path);
-            if (!symbolImports.ContainsKey(importedSymbol))
+            if(!symbolImports.ContainsKey(importedSymbol))
             {
                 symbolImports.Add(importedSymbol, new FlowTypeImportDefaultFromPathStatement
                     {
@@ -39,6 +40,7 @@ namespace SkbKontur.TypeScript.ContractGenerator
                         PathToUnit = path,
                     });
             }
+
             return new FlowTypeVariableReference(localName);
         }
 
@@ -46,17 +48,19 @@ namespace SkbKontur.TypeScript.ContractGenerator
         {
             var result = new StringBuilder();
 
-            foreach (var import in Imports)
+            foreach(var import in Imports)
             {
                 result.Append(import.GenerateCode(context)).Append(context.NewLine);
             }
-            foreach (var import in symbolImports.Values)
+
+            foreach(var import in symbolImports.Values)
             {
                 result.Append(import.GenerateCode(context)).Append(context.NewLine);
             }
+
             result.Append(context.NewLine);
 
-            foreach (var statement in body)
+            foreach(var statement in Body)
             {
                 result.Append(statement.GenerateCode(context)).Append(context.NewLine);
             }
@@ -66,7 +70,5 @@ namespace SkbKontur.TypeScript.ContractGenerator
 
         private readonly Dictionary<Type, FlowTypeImportStatement> imports = new Dictionary<Type, FlowTypeImportStatement>();
         private readonly Dictionary<ImportedSymbol, FlowTypeImportStatement> symbolImports = new Dictionary<ImportedSymbol, FlowTypeImportStatement>();
-
-        private readonly List<FlowTypeStatement> body = new List<FlowTypeStatement>();
     }
 }

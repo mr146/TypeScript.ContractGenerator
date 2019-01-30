@@ -1,11 +1,11 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace SkbKontur.TypeScript.ContractGenerator.CodeDom
 {
     public class FlowTypeFunctionType : FlowTypeType
     {
-        public List<FlowTypeArgumentDeclaration> Arguments { get { return arguments; } }
+        public List<FlowTypeArgumentDeclaration> Arguments { get; } = new List<FlowTypeArgumentDeclaration>();
         public FlowTypeType Result { get; set; }
 
         public override string GenerateCode(ICodeGenerationContext context)
@@ -17,7 +17,5 @@ namespace SkbKontur.TypeScript.ContractGenerator.CodeDom
         {
             return string.Join(", ", Arguments.Select(x => x.GenerateCode(context)));
         }
-
-        private readonly List<FlowTypeArgumentDeclaration> arguments = new List<FlowTypeArgumentDeclaration>();
     }
 }

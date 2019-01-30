@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 using SkbKontur.TypeScript.ContractGenerator.CodeDom;
 
@@ -22,7 +22,7 @@ namespace SkbKontur.TypeScript.ContractGenerator.TypeBuilders
         public Type Type { get; set; }
         public virtual bool IsDefinitionBuilded { get { return true; } }
 
-        public virtual void BuildDefiniion(ITypeGenerator typeGenerator)
+        public virtual void BuildDefinition(ITypeGenerator typeGenerator)
         {
         }
 

@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 
 namespace SkbKontur.TypeScript.ContractGenerator.CodeDom
 {
@@ -11,12 +11,7 @@ namespace SkbKontur.TypeScript.ContractGenerator.CodeDom
 
         public override string GenerateCode(ICodeGenerationContext context)
         {
-            var resultWithNewLines = string.Join(" |" + context.NewLine, types.Select(x => x.GenerateCode(context)));
-            if (resultWithNewLines.Length < 90)
-            {
-                return string.Join(" | ", types.Select(x => x.GenerateCode(context)));
-            }
-            return resultWithNewLines;
+            return string.Join(" |" + context.NewLine, types.Select(x => x.GenerateCode(context)));
         }
 
         private readonly FlowTypeType[] types;
