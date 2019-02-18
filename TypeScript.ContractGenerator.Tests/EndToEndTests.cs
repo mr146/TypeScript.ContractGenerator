@@ -5,9 +5,11 @@ using FluentAssertions;
 
 using NUnit.Framework;
 
-using SkbKontur.TypeScript.ContractGenerator.CodeDom;
 using SkbKontur.TypeScript.ContractGenerator.Tests.CustomTypeGenerators;
 using SkbKontur.TypeScript.ContractGenerator.Tests.Types;
+
+using SKBKontur.Catalogue.TypeScript.CodeDom;
+using SKBKontur.Catalogue.TypeScript.ContractGenerator.Core;
 
 namespace SkbKontur.TypeScript.ContractGenerator.Tests
 {

@@ -1,7 +1,8 @@
 using System;
 
-using SkbKontur.TypeScript.ContractGenerator.CodeDom;
-using SkbKontur.TypeScript.ContractGenerator.TypeBuilders;
+using SKBKontur.Catalogue.TypeScript.CodeDom;
+using SKBKontur.Catalogue.TypeScript.ContractGenerator.Core;
+using SKBKontur.Catalogue.TypeScript.ContractGenerator.Core.TypeBuilders;
 
 namespace SkbKontur.TypeScript.ContractGenerator.Tests.CustomTypeGenerators
 {
@@ -13,7 +14,7 @@ namespace SkbKontur.TypeScript.ContractGenerator.Tests.CustomTypeGenerators
             valueType = dictionaryType.GetGenericArguments()[1];
         }
 
-        public bool IsDefinitionBuilt => true;
+        public bool IsDefinitionBuilded => true;
 
         public void Initialize(ITypeGenerator typeGenerator)
         {
@@ -23,24 +24,23 @@ namespace SkbKontur.TypeScript.ContractGenerator.Tests.CustomTypeGenerators
         {
         }
 
-        public FlowTypeType ReferenceFrom(FlowTypeUnit targetUnit, ITypeGenerator typeGenerator)
+        public TypeScriptType ReferenceFrom(TypeScriptUnit targetUnit, ITypeGenerator typeGenerator)
         {
             var keyFlowType = typeGenerator.ResolveType(keyType).ReferenceFrom(targetUnit, typeGenerator);
             var valueFlowType = typeGenerator.ResolveType(valueType).ReferenceFrom(targetUnit, typeGenerator);
 
-            return new FlowTypeTypeDefintion
+            return new TypeScriptTypeDefintion
                 {
                     Members =
                         {
-                            new FlowTypeTypePropertyGetterDeclaration
+                            new TypeScriptTypePropertyGetterDeclaration
                                 {
-                                    Argument = new FlowTypeArgumentDeclaration
+                                    Argument = new TypeScriptArgumentDeclaration
                                         {
                                             Name = "key",
                                             Type = keyFlowType,
                                         },
                                     ResultType = valueFlowType,
-                                    Optional = true,
                                 }
                         }
                 };

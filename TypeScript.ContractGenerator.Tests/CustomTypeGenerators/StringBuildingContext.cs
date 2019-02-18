@@ -1,11 +1,12 @@
-using SkbKontur.TypeScript.ContractGenerator.CodeDom;
-using SkbKontur.TypeScript.ContractGenerator.TypeBuilders;
+using SKBKontur.Catalogue.TypeScript.CodeDom;
+using SKBKontur.Catalogue.TypeScript.ContractGenerator.Core;
+using SKBKontur.Catalogue.TypeScript.ContractGenerator.Core.TypeBuilders;
 
 namespace SkbKontur.TypeScript.ContractGenerator.Tests.CustomTypeGenerators
 {
     public class StringBuildingContext : ITypeBuildingContext
     {
-        public bool IsDefinitionBuilt => true;
+        public bool IsDefinitionBuilded => true;
 
         public void Initialize(ITypeGenerator typeGenerator)
         {
@@ -15,9 +16,9 @@ namespace SkbKontur.TypeScript.ContractGenerator.Tests.CustomTypeGenerators
         {
         }
 
-        public FlowTypeType ReferenceFrom(FlowTypeUnit targetUnit, ITypeGenerator typeGenerator)
+        public TypeScriptType ReferenceFrom(TypeScriptUnit targetUnit, ITypeGenerator typeGenerator)
         {
-            return new FlowTypeBuildInType("string");
+            return new TypeScriptBuildInType("string");
         }
     }
 }

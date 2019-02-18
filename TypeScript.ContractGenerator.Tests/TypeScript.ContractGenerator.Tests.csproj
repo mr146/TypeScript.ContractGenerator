@@ -2,14 +2,10 @@
 
     <PropertyGroup>
       <IsPackable>false</IsPackable>
-      <TargetFrameworks>net472;netcoreapp2.1</TargetFrameworks>
+      <TargetFrameworks>net472</TargetFrameworks>
       <AssemblyName>SkbKontur.TypeScript.ContractGenerator.Tests</AssemblyName>
       <RootNamespace>SkbKontur.TypeScript.ContractGenerator.Tests</RootNamespace>
     </PropertyGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\TypeScript.ContractGenerator\TypeScript.ContractGenerator.csproj" />
-    </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="FluentAssertions" Version="5.6.0" />
@@ -218,6 +214,12 @@
       <None Update="Files\Options.Expected\enum-generation-fixed-strings.ts">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\TypeScript.CodeDom\TypeScript.CodeDom.csproj" />
+      <ProjectReference Include="..\TypeScript.ContractGenerator.Core\TypeScript.ContractGenerator.Core.csproj" />
+      <ProjectReference Include="..\TypeScript.ContractGenerator.Infection\TypeScript.ContractGenerator.Infection.csproj" />
     </ItemGroup>
 
 </Project>

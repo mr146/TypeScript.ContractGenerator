@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D7530D45-F1BD-466B-917F-8CE194A9A6BA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SKBKontur.Catalogue.TypeScript.CodeDom</RootNamespace>
+    <AssemblyName>Catalogue.TypeScript.CodeDom</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ICodeGenerationContext.cs" />
+    <Compile Include="JavaScriptTypeChecker.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringBuilderUtils.cs" />
+    <Compile Include="TypeScriptArgumentDeclaration.cs" />
+    <Compile Include="TypeScriptArrayType.cs" />
+    <Compile Include="TypeScriptBuildInType.cs" />
+    <Compile Include="TypeScriptCastExpression.cs" />
+    <Compile Include="TypeScriptClassDeclaration.cs" />
+    <Compile Include="TypeScriptClassDefinition.cs" />
+    <Compile Include="TypeScriptClassMemberDefinition.cs" />
+    <Compile Include="TypeScriptConstantDefinition.cs" />
+    <Compile Include="TypeScriptConstantExpression.cs" />
+    <Compile Include="TypeScriptConstructorDefinition.cs" />
+    <Compile Include="TypeScriptDefinition.cs" />
+    <Compile Include="TypeScriptDefinitionsBuilder.cs" />
+    <Compile Include="TypeScriptEnumDeclaration.cs" />
+    <Compile Include="TypeScriptEnumDefinition.cs" />
+    <Compile Include="TypeScriptEnumValue.cs" />
+    <Compile Include="TypeScriptExportStatement.cs" />
+    <Compile Include="TypeScriptExportTypeStatement.cs" />
+    <Compile Include="TypeScriptExpression.cs" />
+    <Compile Include="TypeScriptFileBuilder.cs" />
+    <Compile Include="TypeScriptFunctionDefinition.cs" />
+    <Compile Include="TypeScriptFunctionType.cs" />
+    <Compile Include="TypeScriptGenericType.cs" />
+    <Compile Include="TypeScriptImportStatement.cs" />
+    <Compile Include="TypeScriptInterfaceDeclaration.cs" />
+    <Compile Include="TypeScriptInterfaceDefinition.cs" />
+    <Compile Include="TypeScriptInterfaceFunctionMember.cs" />
+    <Compile Include="TypeScriptMethodCallExpression.cs" />
+    <Compile Include="TypeScriptNullableType.cs" />
+    <Compile Include="TypeScriptObjectLiteral.cs" />
+    <Compile Include="TypeScriptObjectLiteralInitializer.cs" />
+    <Compile Include="TypeScriptObjectLiteralProperty.cs" />
+    <Compile Include="TypeScriptObjectLiteralSpread.cs" />
+    <Compile Include="TypeScriptPromiseOfType.cs" />
+    <Compile Include="TypeScriptPropertyMember.cs" />
+    <Compile Include="TypeScriptReturnStatement.cs" />
+    <Compile Include="TypeScriptStatement.cs" />
+    <Compile Include="TypeScriptStringLiteral.cs" />
+    <Compile Include="TypeScriptStringLiteralType.cs" />
+    <Compile Include="TypeScriptTemplateStringLiteral.cs" />
+    <Compile Include="TypeScriptThisReference.cs" />
+    <Compile Include="TypeScriptType.cs" />
+    <Compile Include="TypeScriptTypeDeclaration.cs" />
+    <Compile Include="TypeScriptTypeDefintion.cs" />
+    <Compile Include="TypeScriptTypeKeysOfType.cs" />
+    <Compile Include="TypeScriptTypeMemberDeclaration.cs" />
+    <Compile Include="TypeScriptTypeMemberDeclarationBase.cs" />
+    <Compile Include="TypeScriptTypeOfValue.cs" />
+    <Compile Include="TypeScriptTypePropertyGetterDeclaration.cs" />
+    <Compile Include="TypeScriptTypeReference.cs" />
+    <Compile Include="TypeScriptTypeSpreadMemberDeclaration.cs" />
+    <Compile Include="TypeScriptUnionType.cs" />
+    <Compile Include="TypeScriptVariableReference.cs" />
+    <Compile Include="TypeScriptVaribaleDefinition.cs" />
+    <Compile Include="TypeScriptVoidType.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Copy SourceFiles="$(TargetDir)$(TargetName).dll" DestinationFolder="$(SolutionDir)..\Assemblies\Temp\TypeScriptGeneration" ContinueOnError="false" />
+    <Copy SourceFiles="$(TargetDir)$(TargetName).pdb" DestinationFolder="$(SolutionDir)..\Assemblies\Temp\TypeScriptGeneration" ContinueOnError="false" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

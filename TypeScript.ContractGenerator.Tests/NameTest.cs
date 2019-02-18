@@ -2,7 +2,7 @@ using FluentAssertions;
 
 using NUnit.Framework;
 
-using SkbKontur.TypeScript.ContractGenerator.Extensions;
+using SKBKontur.Catalogue.TypeScript.ContractGenerator.Core.Extensions;
 
 namespace SkbKontur.TypeScript.ContractGenerator.Tests
 {

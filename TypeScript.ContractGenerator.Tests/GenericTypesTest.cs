@@ -4,6 +4,8 @@ using NUnit.Framework;
 
 using SkbKontur.TypeScript.ContractGenerator.Tests.Types;
 
+using SKBKontur.Catalogue.TypeScript.ContractGenerator.Core;
+
 namespace SkbKontur.TypeScript.ContractGenerator.Tests
 {
     public class GenericTypesTest
@@ -11,7 +13,7 @@ namespace SkbKontur.TypeScript.ContractGenerator.Tests
         [Test]
         public void RootCantBeGenericType()
         {
-            new FlowTypeGenerator(FlowTypeGenerationOptions.Default, CustomTypeGenerator.Null, new RootTypesProvider(typeof(GenericRootType<CustomType>)))
+            new TypeScriptGenerator(null, new[]{typeof(GenericRootType<CustomType>)})
                 .Generate().Should().BeEmpty();
         }
     }

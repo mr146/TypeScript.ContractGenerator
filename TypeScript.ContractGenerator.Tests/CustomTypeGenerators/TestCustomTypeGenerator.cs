@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 
-using SkbKontur.TypeScript.ContractGenerator.TypeBuilders;
+using SKBKontur.Catalogue.TypeScript.ContractGenerator.Core;
+using SKBKontur.Catalogue.TypeScript.ContractGenerator.Core.TypeBuilders;
 
 namespace SkbKontur.TypeScript.ContractGenerator.Tests.CustomTypeGenerators
 {
@@ -12,7 +13,7 @@ namespace SkbKontur.TypeScript.ContractGenerator.Tests.CustomTypeGenerators
             return "";
         }
 
-        public ITypeBuildingContext ResolveType(string initialUnitPath, Type type, IFlowTypeUnitFactory unitFactory)
+        public ITypeBuildingContext ResolveType(string initialUnitPath, Type type, ITypeScriptUnitFactory unitFactory)
         {
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
                 return new ListTypeBuildingContext(type);
