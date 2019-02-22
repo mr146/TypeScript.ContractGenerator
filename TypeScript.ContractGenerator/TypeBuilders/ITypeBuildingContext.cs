@@ -1,3 +1,5 @@
+using JetBrains.Annotations;
+
 using SkbKontur.TypeScript.ContractGenerator.CodeDom;
 
 namespace SkbKontur.TypeScript.ContractGenerator.TypeBuilders
@@ -5,8 +7,8 @@ namespace SkbKontur.TypeScript.ContractGenerator.TypeBuilders
     public interface ITypeBuildingContext
     {
         bool IsDefinitionBuilt { get; }
-        void Initialize(ITypeGenerator typeGenerator);
-        void BuildDefinition(ITypeGenerator typeGenerator);
-        FlowTypeType ReferenceFrom(FlowTypeUnit targetUnit, ITypeGenerator typeGenerator);
+        void Initialize([NotNull] ITypeGenerator typeGenerator);
+        void BuildDefinition([NotNull] ITypeGenerator typeGenerator);
+        FlowTypeType ReferenceFrom(FlowTypeUnit targetUnit, [NotNull] ITypeGenerator typeGenerator);
     }
 }

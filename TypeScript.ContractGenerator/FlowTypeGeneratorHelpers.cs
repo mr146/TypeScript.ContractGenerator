@@ -2,11 +2,13 @@ using System;
 using System.Linq;
 using System.Reflection;
 
+using JetBrains.Annotations;
+
 namespace SkbKontur.TypeScript.ContractGenerator
 {
     public static class FlowTypeGeneratorHelpers
     {
-        public static (bool, Type) ProcessNullable(ICustomAttributeProvider attributeContainer, Type type)
+        public static (bool, Type) ProcessNullable([CanBeNull] ICustomAttributeProvider attributeContainer, [NotNull] Type type)
         {
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
             {

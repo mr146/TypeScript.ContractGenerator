@@ -1,10 +1,12 @@
 using System.IO;
 
+using JetBrains.Annotations;
+
 namespace SkbKontur.TypeScript.ContractGenerator.Internals
 {
     internal static class FilesGenerator
     {
-        public static void GenerateFiles(string targetDir, DefaultFlowTypeGeneratorOutput output, FilesGenerationContext filesGenerationContext)
+        public static void GenerateFiles([NotNull] string targetDir, [NotNull] DefaultFlowTypeGeneratorOutput output, [NotNull] FilesGenerationContext filesGenerationContext)
         {
             DeleteFiles(targetDir, $"*.{filesGenerationContext.FileExtension}");
             Directory.CreateDirectory(targetDir);
@@ -19,20 +21,20 @@ namespace SkbKontur.TypeScript.ContractGenerator.Internals
             }
         }
 
-        private static string GetUnitTargetFileName(string targetDir, FlowTypeUnit unit, string fileExtension)
+        [NotNull]
+        private static string GetUnitTargetFileName([NotNull] string targetDir, [NotNull] FlowTypeUnit unit, [NotNull] string fileExtension)
         {
-            var targetFileName = Path.Combine(targetDir, $"{unit.Path}.{fileExtension}");
-            return targetFileName;
+            return Path.Combine(targetDir, $"{unit.Path}.{fileExtension}");
         }
 
-        private static void EnsureDirectoryExists(string targetFileName)
+        private static void EnsureDirectoryExists([NotNull] string targetFileName)
         {
             var targetDirectoryName = Path.GetDirectoryName(targetFileName);
             if (!string.IsNullOrEmpty(targetDirectoryName))
                 Directory.CreateDirectory(targetDirectoryName);
         }
 
-        private static void DeleteFiles(string targetDir, string searchPattern)
+        private static void DeleteFiles([NotNull] string targetDir, [NotNull] string searchPattern)
         {
             var files = Directory.GetFiles(targetDir, searchPattern, SearchOption.AllDirectories);
             foreach (var file in files)

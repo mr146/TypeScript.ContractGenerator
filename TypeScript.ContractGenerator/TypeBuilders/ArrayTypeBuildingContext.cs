@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using JetBrains.Annotations;
+
 using SkbKontur.TypeScript.ContractGenerator.CodeDom;
 
 namespace SkbKontur.TypeScript.ContractGenerator.TypeBuilders
@@ -23,22 +25,22 @@ namespace SkbKontur.TypeScript.ContractGenerator.TypeBuilders
             throw new ArgumentException("arrayType should be either Array or List<T>", nameof(arrayType));
         }
 
-        public static bool Accept(Type type)
+        public static bool Accept([NotNull] Type type)
         {
             return type.IsArray || type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>);
         }
 
         public bool IsDefinitionBuilt => true;
 
-        public void Initialize(ITypeGenerator typeGenerator)
+        public void Initialize([NotNull] ITypeGenerator typeGenerator)
         {
         }
 
-        public void BuildDefinition(ITypeGenerator typeGenerator)
+        public void BuildDefinition([NotNull] ITypeGenerator typeGenerator)
         {
         }
 
-        public FlowTypeType ReferenceFrom(FlowTypeUnit targetUnit, ITypeGenerator typeGenerator)
+        public FlowTypeType ReferenceFrom(FlowTypeUnit targetUnit, [NotNull] ITypeGenerator typeGenerator)
         {
             var itemType = typeGenerator.ResolveType(elementType).ReferenceFrom(targetUnit, typeGenerator);
             return new FlowTypeArrayType(itemType);

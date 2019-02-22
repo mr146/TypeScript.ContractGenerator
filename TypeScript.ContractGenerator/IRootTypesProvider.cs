@@ -6,7 +6,7 @@ namespace SkbKontur.TypeScript.ContractGenerator
 {
     public interface IRootTypesProvider
     {
-        [NotNull]
+        [NotNull, ItemNotNull]
         Type[] GetRootTypes();
     }
 }

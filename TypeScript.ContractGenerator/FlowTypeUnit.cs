@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using JetBrains.Annotations;
+
 using SkbKontur.TypeScript.ContractGenerator.CodeDom;
 using SkbKontur.TypeScript.ContractGenerator.Internals;
 
@@ -9,13 +11,17 @@ namespace SkbKontur.TypeScript.ContractGenerator
 {
     public class FlowTypeUnit
     {
+        [NotNull]
         public string Path { get; set; }
 
+        [NotNull, ItemNotNull]
         public IEnumerable<FlowTypeImportStatement> Imports => imports.Values;
 
+        [NotNull, ItemNotNull]
         public List<FlowTypeStatement> Body { get; } = new List<FlowTypeStatement>();
 
-        public FlowTypeTypeReference AddTypeImport(Type sourceType, FlowTypeTypeDeclaration typeDeclaration, FlowTypeUnit sourceUnit)
+        [NotNull]
+        public FlowTypeTypeReference AddTypeImport([NotNull] Type sourceType, [NotNull] FlowTypeTypeDeclaration typeDeclaration, [NotNull] FlowTypeUnit sourceUnit)
         {
             if (sourceUnit != this && !imports.ContainsKey(sourceType))
             {
@@ -29,7 +35,7 @@ namespace SkbKontur.TypeScript.ContractGenerator
             return new FlowTypeTypeReference(typeDeclaration.Name);
         }
 
-        public FlowTypeVariableReference AddDefaultSymbolImport(string localName, string path)
+        public FlowTypeVariableReference AddDefaultSymbolImport([NotNull] string localName, [NotNull] string path)
         {
             var importedSymbol = new ImportedSymbol("default", localName, path);
             if (!symbolImports.ContainsKey(importedSymbol))

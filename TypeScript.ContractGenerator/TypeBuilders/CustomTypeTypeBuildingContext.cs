@@ -21,7 +21,8 @@ namespace SkbKontur.TypeScript.ContractGenerator.TypeBuilders
 
         public override bool IsDefinitionBuilt => Declaration.Definition != null;
 
-        private FlowTypeTypeDeclaration CreateComplexFlowTypeDeclarationWithoutDefinition(Type type)
+        [NotNull]
+        private FlowTypeTypeDeclaration CreateComplexFlowTypeDeclarationWithoutDefinition([NotNull] Type type)
         {
             var result = new FlowTypeTypeDeclaration
                 {
@@ -32,7 +33,7 @@ namespace SkbKontur.TypeScript.ContractGenerator.TypeBuilders
             return result;
         }
 
-        public override void Initialize(ITypeGenerator typeGenerator)
+        public override void Initialize([NotNull] ITypeGenerator typeGenerator)
         {
             if (Type.BaseType != typeof(object) && Type.BaseType != typeof(ValueType) && Type.BaseType != typeof(MarshalByRefObject) && Type.BaseType != null)
             {
@@ -42,12 +43,13 @@ namespace SkbKontur.TypeScript.ContractGenerator.TypeBuilders
             Unit.Body.Add(new FlowTypeExportTypeStatement {Declaration = Declaration});
         }
 
-        public override void BuildDefinition(ITypeGenerator typeGenerator)
+        public override void BuildDefinition([NotNull] ITypeGenerator typeGenerator)
         {
             Declaration.Definition = CreateComplexFlowTypeDefinition(typeGenerator);
         }
 
-        protected virtual FlowTypeTypeDefintion CreateComplexFlowTypeDefinition(ITypeGenerator typeGenerator)
+        [NotNull]
+        protected virtual FlowTypeTypeDefintion CreateComplexFlowTypeDefinition([NotNull] ITypeGenerator typeGenerator)
         {
             var result = new FlowTypeTypeDefintion();
             var properties = CreateTypeProperties(Type);
@@ -65,7 +67,7 @@ namespace SkbKontur.TypeScript.ContractGenerator.TypeBuilders
             return result;
         }
 
-        private FlowTypeType GetMaybeNullableComplexType(ITypeGenerator typeGenerator, Type type, PropertyInfo property, bool isNullable)
+        private FlowTypeType GetMaybeNullableComplexType([NotNull] ITypeGenerator typeGenerator, [NotNull] Type type, [NotNull] PropertyInfo property, bool isNullable)
         {
             var propertyType = typeGenerator.BuildAndImportType(Unit, null, type);
 
@@ -86,7 +88,8 @@ namespace SkbKontur.TypeScript.ContractGenerator.TypeBuilders
             return propertyName.ToLowerCamelCase();
         }
 
-        protected virtual PropertyInfo[] CreateTypeProperties(Type type)
+        [NotNull, ItemNotNull]
+        protected virtual PropertyInfo[] CreateTypeProperties([NotNull] Type type)
         {
             return type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
         }

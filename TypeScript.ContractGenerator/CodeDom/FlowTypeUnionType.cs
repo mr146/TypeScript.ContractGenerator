@@ -1,10 +1,12 @@
 using System.Linq;
 
+using JetBrains.Annotations;
+
 namespace SkbKontur.TypeScript.ContractGenerator.CodeDom
 {
     public class FlowTypeUnionType : FlowTypeType
     {
-        public FlowTypeUnionType(FlowTypeType[] types)
+        public FlowTypeUnionType([NotNull, ItemNotNull] FlowTypeType[] types)
         {
             this.types = types;
         }

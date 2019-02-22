@@ -1,5 +1,7 @@
 using System;
 
+using JetBrains.Annotations;
+
 using SkbKontur.TypeScript.ContractGenerator.CodeDom;
 
 namespace SkbKontur.TypeScript.ContractGenerator.Internals
@@ -13,10 +15,14 @@ namespace SkbKontur.TypeScript.ContractGenerator.Internals
 
         public JavaScriptTypeChecker TypeChecker { get; }
 
+        [NotNull]
         public string Tab => "    ";
+
+        [NotNull]
         public string NewLine => "\n";
 
-        public string GetReferenceFromUnitToAnother(FlowTypeUnit currentUnit, FlowTypeUnit targetUnit)
+        [NotNull]
+        public string GetReferenceFromUnitToAnother([NotNull] FlowTypeUnit currentUnit, [NotNull] FlowTypeUnit targetUnit)
         {
             var path1 = new Uri(@"C:\a\a\a\a\a\a\a\a\" + currentUnit.Path);
             var path2 = new Uri(@"C:\a\a\a\a\a\a\a\a\" + targetUnit.Path);
@@ -24,6 +30,7 @@ namespace SkbKontur.TypeScript.ContractGenerator.Internals
             return "./" + diff.OriginalString;
         }
 
+        [NotNull]
         public string GetReferenceFromUnitToAnother(string currentUnit, string targetUnit)
         {
             var path1 = new Uri(@"C:\a\a\a\a\a\a\a\a\" + currentUnit);

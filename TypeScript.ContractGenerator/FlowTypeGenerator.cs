@@ -25,6 +25,7 @@ namespace SkbKontur.TypeScript.ContractGenerator
             flowTypeDeclarations = new Dictionary<Type, ITypeBuildingContext>();
         }
 
+        [NotNull, ItemNotNull]
         public FlowTypeUnit[] Generate()
         {
             foreach (var type in rootTypes)
@@ -40,7 +41,7 @@ namespace SkbKontur.TypeScript.ContractGenerator
             return flowTypeUnitFactory.Units;
         }
 
-        public void GenerateFiles(string targetPath, JavaScriptTypeChecker javaScriptTypeChecker)
+        public void GenerateFiles([NotNull] string targetPath, JavaScriptTypeChecker javaScriptTypeChecker)
         {
             ValidateOptions(javaScriptTypeChecker, options);
 
@@ -58,18 +59,19 @@ namespace SkbKontur.TypeScript.ContractGenerator
         }
 
         [SuppressMessage("ReSharper", "ParameterOnlyUsedForPreconditionCheck.Local")]
-        private static void ValidateOptions(JavaScriptTypeChecker javaScriptTypeChecker, FlowTypeGenerationOptions flowTypeGenerationOptions)
+        private static void ValidateOptions(JavaScriptTypeChecker javaScriptTypeChecker, [NotNull] FlowTypeGenerationOptions flowTypeGenerationOptions)
         {
             if (javaScriptTypeChecker == JavaScriptTypeChecker.Flow && flowTypeGenerationOptions.EnumGenerationMode == EnumGenerationMode.TypeScriptEnum)
                 throw new ArgumentException("Flow is not compatible with TypeScript enums");
         }
 
-        private void RequestTypeBuild(Type type)
+        private void RequestTypeBuild([NotNull] Type type)
         {
             ResolveType(type);
         }
 
-        public ITypeBuildingContext ResolveType(Type type)
+        [NotNull]
+        public ITypeBuildingContext ResolveType([NotNull] Type type)
         {
             if (flowTypeDeclarations.ContainsKey(type))
             {
@@ -82,7 +84,8 @@ namespace SkbKontur.TypeScript.ContractGenerator
             return typeBuildingContext;
         }
 
-        private ITypeBuildingContext GetTypeBuildingContext(string typeLocation, Type type)
+        [NotNull]
+        private ITypeBuildingContext GetTypeBuildingContext([NotNull] string typeLocation, [NotNull] Type type)
         {
             if (BuildInTypeBuildingContext.Accept(type))
                 return new BuildInTypeBuildingContext(type);
@@ -121,7 +124,8 @@ namespace SkbKontur.TypeScript.ContractGenerator
             return new CustomTypeTypeBuildingContext(flowTypeUnitFactory.GetOrCreateTypeUnit(typeLocation), type, options);
         }
 
-        public FlowTypeType BuildAndImportType(FlowTypeUnit targetUnit, ICustomAttributeProvider attributeProvider, Type type)
+        [NotNull]
+        public FlowTypeType BuildAndImportType([NotNull] FlowTypeUnit targetUnit, [CanBeNull] ICustomAttributeProvider attributeProvider, [NotNull] Type type)
         {
             var (isNullable, resultType) = FlowTypeGeneratorHelpers.ProcessNullable(attributeProvider, type);
             var result = GetFlowTypeType(targetUnit, resultType);
@@ -130,7 +134,8 @@ namespace SkbKontur.TypeScript.ContractGenerator
             return result;
         }
 
-        private FlowTypeType GetFlowTypeType(FlowTypeUnit targetUnit, Type type)
+        [NotNull]
+        private FlowTypeType GetFlowTypeType([NotNull] FlowTypeUnit targetUnit, [NotNull] Type type)
         {
             if (flowTypeDeclarations.ContainsKey(type))
                 return flowTypeDeclarations[type].ReferenceFrom(targetUnit, this);

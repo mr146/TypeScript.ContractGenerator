@@ -1,10 +1,13 @@
+using JetBrains.Annotations;
+
 using SkbKontur.TypeScript.ContractGenerator.CodeDom;
 
 namespace SkbKontur.TypeScript.ContractGenerator.Internals
 {
     internal class FlowTypeImportFromUnitStatement : FlowTypeImportStatement
     {
-        public override string GenerateCode(ICodeGenerationContext context)
+        [NotNull]
+        public override string GenerateCode([NotNull] ICodeGenerationContext context)
         {
             if (context.TypeChecker == JavaScriptTypeChecker.TypeScript)
             {

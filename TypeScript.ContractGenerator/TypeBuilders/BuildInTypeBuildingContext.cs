@@ -1,23 +1,26 @@
 using System;
 using System.Collections.Generic;
 
+using JetBrains.Annotations;
+
 using SkbKontur.TypeScript.ContractGenerator.CodeDom;
 
 namespace SkbKontur.TypeScript.ContractGenerator.TypeBuilders
 {
     public class BuildInTypeBuildingContext : ITypeBuildingContext
     {
-        public BuildInTypeBuildingContext(Type type)
+        public BuildInTypeBuildingContext([NotNull] Type type)
         {
             this.type = type;
         }
 
-        public static bool Accept(Type type)
+        public static bool Accept([NotNull] Type type)
         {
             return builtinTypes.ContainsKey(type);
         }
 
-        public FlowTypeType ReferenceFrom(FlowTypeUnit targetUnit, ITypeGenerator typeGenerator)
+        [NotNull]
+        public FlowTypeType ReferenceFrom(FlowTypeUnit targetUnit, [NotNull] ITypeGenerator typeGenerator)
         {
             if (builtinTypes.ContainsKey(type))
                 return new FlowTypeBuildInType(builtinTypes[type]);
@@ -26,11 +29,11 @@ namespace SkbKontur.TypeScript.ContractGenerator.TypeBuilders
 
         public bool IsDefinitionBuilt => true;
 
-        public void Initialize(ITypeGenerator typeGenerator)
+        public void Initialize([NotNull] ITypeGenerator typeGenerator)
         {
         }
 
-        public void BuildDefinition(ITypeGenerator typeGenerator)
+        public void BuildDefinition([NotNull] ITypeGenerator typeGenerator)
         {
         }
 

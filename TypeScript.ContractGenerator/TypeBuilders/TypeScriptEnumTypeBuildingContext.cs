@@ -1,18 +1,20 @@
 using System;
 using System.Linq;
 
+using JetBrains.Annotations;
+
 using SkbKontur.TypeScript.ContractGenerator.CodeDom;
 
 namespace SkbKontur.TypeScript.ContractGenerator.TypeBuilders
 {
     public class TypeScriptEnumTypeBuildingContext : TypeBuildingContext
     {
-        public TypeScriptEnumTypeBuildingContext(FlowTypeUnit unit, Type type)
+        public TypeScriptEnumTypeBuildingContext([NotNull] FlowTypeUnit unit, [NotNull] Type type)
             : base(unit, type)
         {
         }
 
-        public override void Initialize(ITypeGenerator typeGenerator)
+        public override void Initialize([NotNull] ITypeGenerator typeGenerator)
         {
             var values = Type.GetEnumNames();
             var enumResult = new JavaScriptEnumDeclaration

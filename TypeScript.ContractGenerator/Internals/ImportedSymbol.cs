@@ -9,11 +9,11 @@ namespace SkbKontur.TypeScript.ContractGenerator.Internals
             Path = path;
         }
 
-        public string SourceName { get; private set; }
-        public string LocalName { get; private set; }
-        public string Path { get; private set; }
+        public string SourceName { get; }
+        public string LocalName { get; }
+        public string Path { get; }
 
-        protected bool Equals(ImportedSymbol other)
+        private bool Equals(ImportedSymbol other)
         {
             return string.Equals(SourceName, other.SourceName) && string.Equals(LocalName, other.LocalName) && string.Equals(Path, other.Path);
         }

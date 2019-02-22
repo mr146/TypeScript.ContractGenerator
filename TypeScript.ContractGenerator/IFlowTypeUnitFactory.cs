@@ -1,7 +1,10 @@
+using JetBrains.Annotations;
+
 namespace SkbKontur.TypeScript.ContractGenerator
 {
     public interface IFlowTypeUnitFactory
     {
-        FlowTypeUnit GetOrCreateTypeUnit(string path);
+        [NotNull]
+        FlowTypeUnit GetOrCreateTypeUnit([NotNull] string path);
     }
 }
